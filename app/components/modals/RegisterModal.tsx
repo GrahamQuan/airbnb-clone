@@ -42,6 +42,7 @@ const RegisterModal: FC<Props> = (props) => {
       await axios.post('/api/register', data)
       toast.success('Registered!')
       dispatch(onRegisterClose())
+      dispatch(onLoginOpen())
     } catch (error: any) {
       toast.error(error)
     } finally {
@@ -129,6 +130,7 @@ const RegisterModal: FC<Props> = (props) => {
   return (
     <Modal
       disabled={isLoading}
+      secondaryDisabled={isLoading}
       isOpen={isOpen}
       title="Register"
       actionLabel="Continue"

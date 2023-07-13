@@ -10,6 +10,9 @@ import { onRegisterOpen } from '@/app/redux/features/registerSlice'
 import { onLoginOpen } from '@/app/redux/features/loginSlice'
 import { signOut } from 'next-auth/react'
 import { SafeUser } from '@/app/types'
+import { onRentOpen } from '@/app/redux/features/rentSlice'
+import { toast } from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 type Props = {
   user: SafeUser | null
@@ -18,6 +21,7 @@ type Props = {
 const UserMenu: FC<Props> = ({ user }) => {
   const [isOpen, setIsOpen] = useState(false)
   const dispatch = useAppDispatch()
+  const router = useRouter()
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value)
@@ -33,11 +37,28 @@ const UserMenu: FC<Props> = ({ user }) => {
     setIsOpen(false)
   }, [dispatch])
 
+  const onRent = useCallback(() => {
+    if (!user) {
+      toast.error('Please Login First')
+      dispatch(onLoginOpen())
+      return
+    }
+    dispatch(onRentOpen())
+  }, [dispatch, user])
+
+  const onNavigateClick = useCallback(
+    (path: string) => {
+      router.push(path)
+      setIsOpen(false)
+    },
+    [router]
+  )
+
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
         <div
-          // onClick={onRent}
+          onClick={onRent}
           className="
             hidden
             md:block
@@ -95,13 +116,28 @@ const UserMenu: FC<Props> = ({ user }) => {
           <div className="flex flex-col cursor-pointer">
             {user ? (
               <>
-                <MenuItem label="My trips" onClick={() => {}} />
-                <MenuItem label="My favorites" onClick={() => {}} />
-                <MenuItem label="My reservations" onClick={() => {}} />
-                <MenuItem label="My properties" onClick={() => {}} />
+                <MenuItem
+                  label="My trips"
+                  onClick={() => onNavigateClick('/trips')}
+                />
+                <MenuItem
+                  label="My favorites"
+                  onClick={() => onNavigateClick('/favorites')}
+                />
+                <MenuItem
+                  label="My reservations"
+                  onClick={() => onNavigateClick('/reservations')}
+                />
+                <MenuItem
+                  label="My properties"
+                  onClick={() => onNavigateClick('/properties')}
+                />
                 <MenuItem label="Airbnb your home" onClick={() => {}} />
                 <hr />
-                <MenuItem label="Logout" onClick={() => signOut()} />
+                <MenuItem
+                  label="Logout"
+                  onClick={() => signOut({ callbackUrl: '/' })}
+                />
               </>
             ) : (
               <>

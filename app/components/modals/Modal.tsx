@@ -16,6 +16,7 @@ interface ModalProps {
   disabled?: boolean
   secondaryAction?: () => void
   secondaryActionLabel?: string
+  secondaryDisabled?: boolean
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -29,6 +30,7 @@ const Modal: React.FC<ModalProps> = ({
   disabled,
   secondaryAction,
   secondaryActionLabel,
+  secondaryDisabled,
 }) => {
   const [showModal, setShowModal] = useState(isOpen)
 
@@ -37,15 +39,14 @@ const Modal: React.FC<ModalProps> = ({
   }, [isOpen])
 
   const handleClose = useCallback(() => {
-    if (disabled) {
+    if (disabled && secondaryDisabled) {
       return
     }
-
     setShowModal(false)
     setTimeout(() => {
       onClose()
     }, 300)
-  }, [onClose, disabled])
+  }, [onClose, disabled, secondaryDisabled])
 
   const handleSubmit = useCallback(() => {
     if (disabled) {
@@ -56,12 +57,11 @@ const Modal: React.FC<ModalProps> = ({
   }, [onSubmit, disabled])
 
   const handleSecondaryAction = useCallback(() => {
-    if (disabled || !secondaryAction) {
+    if (secondaryDisabled || !secondaryAction) {
       return
     }
-
     secondaryAction()
-  }, [secondaryAction, disabled])
+  }, [secondaryAction, secondaryDisabled])
 
   if (!isOpen) {
     return null
@@ -169,7 +169,7 @@ const Modal: React.FC<ModalProps> = ({
                 >
                   {secondaryAction && secondaryActionLabel && (
                     <Button
-                      disabled={disabled}
+                      disabled={secondaryDisabled}
                       label={secondaryActionLabel}
                       onClick={handleSecondaryAction}
                       outline

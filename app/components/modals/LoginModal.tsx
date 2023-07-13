@@ -132,6 +132,7 @@ const LoginModal: FC<Props> = (props) => {
   return (
     <Modal
       disabled={isLoading}
+      secondaryDisabled={isLoading}
       isOpen={isOpen}
       title="Login"
       actionLabel="Continue"

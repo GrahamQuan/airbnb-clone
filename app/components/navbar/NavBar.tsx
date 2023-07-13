@@ -4,6 +4,7 @@ import Container from '../Container'
 import Search from './Search'
 import UserMenu from './UserMenu'
 import { SafeUser } from '@/app/types'
+import Categories from './Categories'
 
 type Props = {
   user: SafeUser | null
@@ -12,9 +13,10 @@ type Props = {
 const Navbar: FC<Props> = ({ user }) => {
   return (
     <div className="fixed w-full bg-white z-10 shadow-sm">
-      <Container>
-        <div
-          className="
+      <div className="py-4 border-b-[1px]">
+        <Container>
+          <div
+            className="
             flex 
             flex-row 
             items-center 
@@ -22,12 +24,14 @@ const Navbar: FC<Props> = ({ user }) => {
             gap-3
             md:gap-0
           "
-        >
-          <Logo />
-          <Search />
-          <UserMenu user={user} />
-        </div>
-      </Container>
+          >
+            <Logo />
+            <Search />
+            <UserMenu user={user} />
+          </div>
+        </Container>
+      </div>
+      <Categories />
     </div>
   )
 }

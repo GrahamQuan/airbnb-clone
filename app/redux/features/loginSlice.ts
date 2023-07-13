@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 export type loginType = {
   isOpen: boolean
@@ -8,7 +8,7 @@ const initialState: loginType = {
   isOpen: false,
 }
 
-export const signin = createSlice({
+export const login = createSlice({
   name: 'login',
   initialState,
   reducers: {
@@ -21,5 +21,5 @@ export const signin = createSlice({
   },
 })
 
-export const { onLoginOpen, onLoginClose } = signin.actions
-export default signin.reducer
+export const { onLoginOpen, onLoginClose } = login.actions
+export default login.reducer

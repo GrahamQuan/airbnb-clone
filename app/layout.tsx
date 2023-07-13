@@ -8,6 +8,8 @@ import RegisterModal from './components/modals/RegisterModal'
 import ToasterProvider from './providers/ToasterProvider'
 import LoginModal from './components/modals/LoginModal'
 import getCurrentUser from './actions/getCurrentUser'
+import RentModal from './components/modals/RentModal'
+import SearchModal from './components/modals/SearchModal'
 
 const font = Nunito({
   subsets: ['latin'],
@@ -32,15 +34,17 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <ClientOnly>
-          <ReduxProvider>
+        <ReduxProvider>
+          <ClientOnly>
             <NavBar user={user} />
             <ToasterProvider />
             <LoginModal />
             <RegisterModal />
-          </ReduxProvider>
-        </ClientOnly>
-        <div className="pb-20 pt-28">{children}</div>
+            <RentModal />
+            <SearchModal />
+          </ClientOnly>
+          <div className="pb-20 pt-28">{children}</div>
+        </ReduxProvider>
       </body>
     </html>
   )
