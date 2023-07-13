@@ -10,6 +10,8 @@ type HomePropsType = {
   searchParams: ParamsType
 }
 
+export const dynamic = 'force-dynamic'
+
 const Home = async ({ searchParams }: HomePropsType) => {
   const listings = await getListings(searchParams)
   const user = await getCurrentUser()
