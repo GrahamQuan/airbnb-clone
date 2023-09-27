@@ -13,6 +13,7 @@ import { SafeUser } from '@/app/types'
 import { onRentOpen } from '@/app/redux/features/rentSlice'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import OutsideDiv from '../OutsideDiv'
 
 type Props = {
   user: SafeUser | null
@@ -113,7 +114,10 @@ const UserMenu: FC<Props> = ({ user }) => {
           text-sm
         "
         >
-          <div className="flex flex-col cursor-pointer">
+          <OutsideDiv
+            onClickOutside={() => setIsOpen(false)}
+            className="flex flex-col cursor-pointer"
+          >
             {user ? (
               <>
                 <MenuItem
@@ -145,7 +149,7 @@ const UserMenu: FC<Props> = ({ user }) => {
                 <MenuItem label="Sign up" onClick={onSignup} />
               </>
             )}
-          </div>
+          </OutsideDiv>
         </div>
       )}
     </div>

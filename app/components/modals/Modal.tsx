@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
 
 import Button from '../Button'
+import OutsideDiv from '../OutsideDiv'
 
 interface ModalProps {
   isOpen?: boolean
@@ -108,7 +109,8 @@ const Modal: React.FC<ModalProps> = ({
             ${showModal ? 'opacity-100' : 'opacity-0'}
           `}
           >
-            <div
+            <OutsideDiv
+              onClickOutside={handleClose}
               className="
               translate
               h-full
@@ -183,7 +185,7 @@ const Modal: React.FC<ModalProps> = ({
                 </div>
                 {footer}
               </div>
-            </div>
+            </OutsideDiv>
           </div>
         </div>
       </div>
